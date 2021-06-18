@@ -7,9 +7,7 @@ import lombok.*;
 @Setter
 public class Customer {
     @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
+    private String fullName;
     private int scoreDay;
     private int scoreMonth;
 }
