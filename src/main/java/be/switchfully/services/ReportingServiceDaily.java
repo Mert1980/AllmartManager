@@ -2,7 +2,6 @@ package be.switchfully.services;
 
 import be.switchfully.model.Customer;
 import be.switchfully.model.Receipt;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,16 +22,20 @@ public class ReportingServiceDaily implements ReportingService{
                 LocalDate.now().getDayOfMonth() + "-" + LocalDate.now().getMonth().getValue() + "-" +
                 LocalDate.now().getYear());
         System.out.println("---------------------------------------------------------------");
+        System.out.println(String.format("%-20s %-20s","Customer", "Score"));
 
         receiptsOfDay.stream()
                 .map(receipt -> receipt.getCustomer())
                 .distinct()
+                .filter(customer -> customer != null)
                 .sorted(Comparator.comparingInt(Customer::getScoreDay).reversed())
-                .forEach(customer -> System.out.println(customer.getFullName() + "   " + customer.getScoreDay()));
+                .forEach(customer -> System.out.println(String.format("%-20s %-20s", customer.getFullName(), customer.getScoreDay())));
     }
 
     private void calculateDailyScore(Receipt receipt) {
         int score = calculateScore(receipt);
-        receipt.getCustomer().setScoreDay(score);
+        if (receipt.getCustomer() != null) {
+            receipt.getCustomer().setScoreDay(score);
+        }
     }
 }
