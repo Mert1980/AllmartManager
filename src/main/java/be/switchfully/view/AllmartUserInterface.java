@@ -2,13 +2,17 @@ package be.switchfully.view;
 
 import be.switchfully.model.Customer;
 import be.switchfully.model.Product;
-import be.switchfully.services.AllmartServiceFactory;
-import be.switchfully.services.CashierService;
+import be.switchfully.services.*;
 import be.switchfully.dao.LoadDefaultReceipts;
-import be.switchfully.services.CustomerService;
-import be.switchfully.services.ReportingService;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Timer;
 
 public class AllmartUserInterface {
     private static CashierService cashierService = AllmartServiceFactory.getCashierService();
@@ -22,12 +26,30 @@ public class AllmartUserInterface {
 
     public static void run(){
         LoadDefaultReceipts.createReceipts();
+
         openCashRegister();
+
+        scheduleDailyReport();
+
+        askForMonthlyReport();
+    }
+
+    private static void scheduleDailyReport() {
+        DailyReportScheduler scheduler = new DailyReportScheduler();
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = null;
+        try {
+            date = dateFormatter.parse("2021-06-21 19:30");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Timer timer = new Timer(true);
+        timer.schedule(scheduler, date, 86_400_000);
     }
 
     private static void openCashRegister(){
 
-        while (isMoreProduct){
+        while (isCashRegisterOpen){
 
             System.out.println("Enter Customer FullName:  'X' closes the cash register ");
             String input = scanner.nextLine();
@@ -59,19 +81,16 @@ public class AllmartUserInterface {
             isMoreProduct = true;
             cashierService.generateReceipt(customer, productAmountMap);
         }
-        generateReport();
     }
 
-    private static void generateReport() {
-        System.out.println("Enter your preference: \n1: Customer-of-the-day Report, \n2: Customer-of-the-month Report");
-
+    private static void askForMonthlyReport() {
+        System.out.println("Do you want to print customer of the month report? Y/N");
         switch (scanner.next()) {
-            case "1":
-                reportingServiceDaily.generateReport();
-                break;
-            case "2":
+            case "Y":
                 reportingServiceMonthly.generateReport();
                 break;
+            case "N":
+                return;
             default:break;
         }
     }
