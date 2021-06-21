@@ -4,11 +4,9 @@ import be.switchfully.model.Customer;
 import be.switchfully.model.Product;
 import be.switchfully.services.*;
 import be.switchfully.dao.LoadDefaultReceipts;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -89,8 +87,6 @@ public class AllmartUserInterface {
             case "Y":
                 reportingServiceMonthly.generateReport();
                 break;
-            case "N":
-                return;
             default:break;
         }
     }
