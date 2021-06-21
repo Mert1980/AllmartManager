@@ -36,14 +36,12 @@ public class AllmartUserInterface {
 
             if(!isSupermarketOpen(name)) break;
 
-            Customer customer = null;
-            if(!name.isEmpty() && name.length() > 1){
+            Customer customer;
 
-                if(customerService.findByCustomerName(name).getFullName().equalsIgnoreCase(name)){
-                    customer = customerService.findByCustomerName(name);
-                } else {
-                    customer = new Customer(name);
-                }
+            if(customerService.findByCustomerName(name) != null){
+                customer = customerService.findByCustomerName(name);
+            } else {
+                customer = new Customer(name);
             }
 
             System.out.println("Enter product name:");
