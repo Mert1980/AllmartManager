@@ -17,7 +17,6 @@ public class AllmartUserInterface {
     private static CustomerService customerService = AllmartServiceFactory.getCustomerService();
     private static ReportingService reportingServiceDaily = AllmartServiceFactory.getReportingServiceDaily();
     private static ReportingService reportingServiceMonthly = AllmartServiceFactory.getReportingServiceMonthly();
-    private static ReceiptDao receiptDao = AllmartServiceFactory.getReceiptDao();
     private static boolean isOpen = true;
 
     final static Scanner scanner = new Scanner(System.in);
@@ -32,16 +31,16 @@ public class AllmartUserInterface {
 
         while (isOpen){
             System.out.println("Enter Customer FullName:  'X' closes the cash register ");
-            String name = scanner.nextLine();
+            String input = scanner.nextLine();
 
-            if(!isSupermarketOpen(name)) break;
+            if(!isSupermarketOpen(input)) break;
 
             Customer customer;
 
-            if(customerService.findByCustomerName(name) != null){
-                customer = customerService.findByCustomerName(name);
+            if(customerService.findByCustomerName(input) != null){
+                customer = customerService.findByCustomerName(input);
             } else {
-                customer = new Customer(name);
+                customer = new Customer(input);
             }
 
             System.out.println("Enter product name:");
@@ -50,6 +49,7 @@ public class AllmartUserInterface {
 
             System.out.println("Enter the amount of product:");
             Integer amount = Integer.valueOf(scanner.nextLine());
+
             productAmountMap.put(product, amount);
 
             cashierService.generateReceipt(customer, productAmountMap);
@@ -62,10 +62,10 @@ public class AllmartUserInterface {
 
         switch (scanner.next()) {
             case "1":
-                reportingServiceDaily.generateReport(receiptDao.getAll());
+                reportingServiceDaily.generateReport();
                 break;
             case "2":
-                reportingServiceMonthly.generateReport(receiptDao.getAll());
+                reportingServiceMonthly.generateReport();
                 break;
             default:break;
         }

@@ -4,14 +4,21 @@ import be.switchfully.model.Customer;
 import be.switchfully.model.Receipt;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ReportingServiceDaily implements ReportingService{
 
     @Override
-    public void generateReport(Collection<Receipt> receipts) {
+    public void generateReport() {
+        generateReport(LocalDate.now());
+    }
+
+    @Override
+    public void generateReport(LocalDate date) {
+        List<Receipt> receipts = AllmartServiceFactory.getReceiptDao().getAll();
+
         ArrayList<Receipt> receiptsOfDay = receipts.stream()
                 .filter(receipt -> receipt.getDate().getDayOfMonth() == LocalDate.now().getDayOfMonth())
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -37,7 +44,6 @@ public class ReportingServiceDaily implements ReportingService{
         int score = calculateScore(receipt);
         if (receipt.getCustomer() != null) {
             receipt.getCustomer().setScoreDay(score);
-            System.out.println(receipt.getCustomer().getScoreDay());
         }
     }
 }

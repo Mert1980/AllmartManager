@@ -1,12 +1,15 @@
 package be.switchfully.services;
 
 import be.switchfully.model.Receipt;
+
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public interface ReportingService {
-    void generateReport(Collection<Receipt> receipts);
+    void generateReport();
+    void generateReport(LocalDate date);
 
     default int calculateScore(Receipt receipt){
         int score = 0;
