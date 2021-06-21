@@ -1,17 +1,15 @@
-package be.switchfully.services;
+package be.switchfully.dao;
 
+import be.switchfully.services.AllmartServiceFactory;
 import be.switchfully.model.Customer;
 import be.switchfully.model.Product;
-import be.switchfully.model.Receipt;
-
-import java.util.ArrayList;
+import be.switchfully.services.CashierService;
 import java.util.HashMap;
 
-public class LoadInitialData {
-    public static ArrayList<Receipt> createReceipts(){
+public class LoadDefaultReceipts {
+    private static CashierService cashierService = AllmartServiceFactory.getCashierService();
 
-        ArrayList<Receipt> receipts = new ArrayList<>();
-
+    public static void createReceipts(){
         Customer customer1 = new Customer("Mert");
         Customer customer2 = new Customer("Asena");
         Customer customer3 = new Customer("Kaan");
@@ -58,20 +56,10 @@ public class LoadInitialData {
         productAmountMap4.put(product10, 5);
         productAmountMap4.put(product1, 6);
 
-        Receipt receipt1 = new Receipt(customer1, productAmountMap1);
-        Receipt receipt2 = new Receipt(customer2, productAmountMap2);
-        Receipt receipt3 = new Receipt(customer3, productAmountMap3);
-        Receipt receipt4 = new Receipt(customer4, productAmountMap4);
-
-        Receipt receipt5 = new Receipt(customer1, productAmountMap1);
-
-        receipts.add(receipt1); // score 0
-        receipts.add(receipt2); // score 10
-        receipts.add(receipt3); // score 9
-        receipts.add(receipt4); // score 5
-        receipts.add(receipt5); // score 0
-        receipts.add(receipt2); // score 10
-
-        return receipts;
+        cashierService.generateReceipt(customer1, productAmountMap1);
+        cashierService.generateReceipt(customer2, productAmountMap2);
+        cashierService.generateReceipt(customer3, productAmountMap3);
+        cashierService.generateReceipt(customer4, productAmountMap4);
+        cashierService.generateReceipt(customer1, productAmountMap1);
     }
 }
