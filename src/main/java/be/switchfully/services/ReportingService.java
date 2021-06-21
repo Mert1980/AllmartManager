@@ -1,8 +1,8 @@
 package be.switchfully.services;
 
 import be.switchfully.model.Receipt;
-
 import java.util.Collection;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public interface ReportingService {
@@ -10,7 +10,7 @@ public interface ReportingService {
 
     default int calculateScore(Receipt receipt){
         int score = 0;
-        if(receipt.getCustomer() == null || receipt.getCustomer().getFullName().isEmpty()){
+        if(Objects.isNull(receipt.getCustomer()) || receipt.getCustomer().getFullName().isEmpty()){
             return 0;
         }
 
@@ -33,6 +33,8 @@ public interface ReportingService {
                 .stream()
                 .mapToInt(Integer::intValue)
                 .sum();
+
+        score+=amount;
 
         if(amount > 30) {
             score+=9;
