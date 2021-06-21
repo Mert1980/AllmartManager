@@ -1,6 +1,5 @@
 package be.switchfully.view;
 
-import be.switchfully.dao.ReceiptDao;
 import be.switchfully.model.Customer;
 import be.switchfully.model.Product;
 import be.switchfully.services.AllmartServiceFactory;
@@ -8,7 +7,6 @@ import be.switchfully.services.CashierService;
 import be.switchfully.dao.LoadDefaultReceipts;
 import be.switchfully.services.CustomerService;
 import be.switchfully.services.ReportingService;
-
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -17,7 +15,8 @@ public class AllmartUserInterface {
     private static CustomerService customerService = AllmartServiceFactory.getCustomerService();
     private static ReportingService reportingServiceDaily = AllmartServiceFactory.getReportingServiceDaily();
     private static ReportingService reportingServiceMonthly = AllmartServiceFactory.getReportingServiceMonthly();
-    private static boolean isOpen = true;
+    private static boolean isCashRegisterOpen = true;
+    private static boolean isMoreProduct = true;
 
     final static Scanner scanner = new Scanner(System.in);
 
@@ -27,14 +26,15 @@ public class AllmartUserInterface {
     }
 
     private static void openCashRegister(){
-        HashMap<Product, Integer> productAmountMap = new HashMap<>();
 
-        while (isOpen){
+        while (isMoreProduct){
+
             System.out.println("Enter Customer FullName:  'X' closes the cash register ");
             String input = scanner.nextLine();
 
             if(!isSupermarketOpen(input)) break;
 
+            HashMap<Product, Integer> productAmountMap = new HashMap<>();
             Customer customer;
 
             if(customerService.findByCustomerName(input) != null){
@@ -43,15 +43,20 @@ public class AllmartUserInterface {
                 customer = new Customer(input);
             }
 
-            System.out.println("Enter product name:");
-            String productName = scanner.nextLine();
-            Product product = new Product(productName);
+            while(isMoreProduct){
+                System.out.println("Enter product name: 'X' if no more product" );
+                String productName = scanner.nextLine();
 
-            System.out.println("Enter the amount of product:");
-            Integer amount = Integer.valueOf(scanner.nextLine());
+                if(!checkMoreProduct(productName)) break;
+                Product product = new Product(productName);
 
-            productAmountMap.put(product, amount);
+                System.out.println("Enter the amount of product:");
+                Integer amount = Integer.valueOf(scanner.nextLine());
 
+                productAmountMap.put(product, amount);
+            }
+
+            isMoreProduct = true;
             cashierService.generateReceipt(customer, productAmountMap);
         }
         generateReport();
@@ -71,10 +76,17 @@ public class AllmartUserInterface {
         }
     }
 
+    private static boolean checkMoreProduct(String input) {
+        if (input.equalsIgnoreCase("X")) {
+            isMoreProduct = false;
+        }
+        return isMoreProduct;
+    }
+
     private static boolean isSupermarketOpen(String input) {
         if (input.equalsIgnoreCase("X")) {
-            isOpen = false;
+            isCashRegisterOpen = false;
         }
-        return isOpen;
+        return isCashRegisterOpen;
     }
 }
