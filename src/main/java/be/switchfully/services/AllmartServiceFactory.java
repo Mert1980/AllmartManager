@@ -10,7 +10,8 @@ public class AllmartServiceFactory {
     private static CustomerDao customerDao;
     private static CashierService cashierService;
     private static CustomerService customerService;
-    private static ReportingService reportingService;
+    private static ReportingServiceDaily reportingServiceDaily;
+    private static ReportingServiceMonthly reportingServiceMonthly;
 
     public static ReceiptDao getReceiptDao(){
         if(receiptDao == null){
@@ -41,16 +42,16 @@ public class AllmartServiceFactory {
     }
 
     public static ReportingService getReportingServiceDaily(){
-        if(reportingService == null) {
-            reportingService = new ReportingServiceDaily();
+        if(reportingServiceDaily == null) {
+            reportingServiceDaily = new ReportingServiceDaily();
         }
-        return reportingService;
+        return reportingServiceDaily;
     }
 
     public static ReportingService getReportingServiceMonthly(){
-        if(reportingService == null) {
-            reportingService = new ReportingServiceMonthly();
+        if(reportingServiceMonthly == null) {
+            reportingServiceMonthly = new ReportingServiceMonthly();
         }
-        return reportingService;
+        return reportingServiceMonthly;
     }
 }

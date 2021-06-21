@@ -27,15 +27,16 @@ public class ReportingServiceMonthly implements ReportingService {
         receiptsOfDay.stream()
                 .map(receipt -> receipt.getCustomer())
                 .distinct()
-                .filter(customer -> customer != null)
-                .sorted(Comparator.comparingInt(Customer::getScoreDay).reversed())
-                .forEach(customer -> System.out.println(String.format("%-20s %-20s", customer.getFullName(), customer.getScoreDay())));
+                .filter(customer -> customer != null && !customer.getFullName().isEmpty())
+                .sorted(Comparator.comparingInt(Customer::getScoreMonth).reversed())
+                .forEach(customer -> System.out.println(String.format("%-20s %-20s", customer.getFullName(), customer.getScoreMonth())));
     }
 
     private void calculateMonthlyScore(Receipt receipt) {
         int score = calculateScore(receipt);
         if (receipt.getCustomer() != null) {
             receipt.getCustomer().setScoreMonth(score);
+            System.out.println(receipt.getCustomer().getScoreMonth());
         }
     }
 }
