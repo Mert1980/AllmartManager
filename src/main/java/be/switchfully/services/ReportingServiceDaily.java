@@ -40,6 +40,7 @@ public class ReportingServiceDaily implements ReportingService{
     }
 
     private void calculateDailyScore(Receipt receipt) {
+        receipt.getCustomer().setScoreDay(-receipt.getCustomer().getScoreDay());
         int score = calculateScore(receipt);
         if (receipt.getCustomer() != null && !receipt.getCustomer().getFullName().isEmpty()) {
             receipt.getCustomer().setScoreDay(score);
