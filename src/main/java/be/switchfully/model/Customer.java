@@ -8,8 +8,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Customer {
     private String id = UUID.randomUUID().toString();
-    @NonNull
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private int scoreDay;
     private int scoreMonth;
 
@@ -31,6 +31,6 @@ public class Customer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(fullName);
+        return Objects.hash(id);
     }
 }
