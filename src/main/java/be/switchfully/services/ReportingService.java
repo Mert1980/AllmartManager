@@ -4,9 +4,9 @@ import be.switchfully.model.Product;
 import be.switchfully.model.Receipt;
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public interface ReportingService {
+
     void generateReport();
 
     void generateReport(LocalDate date);

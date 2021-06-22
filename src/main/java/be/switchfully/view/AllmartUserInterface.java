@@ -3,7 +3,6 @@ package be.switchfully.view;
 import be.switchfully.model.Customer;
 import be.switchfully.model.Product;
 import be.switchfully.services.*;
-import be.switchfully.dao.LoadDefaultReceipts;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +21,6 @@ public class AllmartUserInterface {
     final static Scanner scanner = new Scanner(System.in);
 
     public static void run(){
-        // LoadDefaultReceipts.createReceipts();
 
         scheduleDailyReport();
 
