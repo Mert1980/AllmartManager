@@ -22,7 +22,7 @@ public class AllmartUserInterface {
     final static Scanner scanner = new Scanner(System.in);
 
     public static void run(){
-        LoadDefaultReceipts.createReceipts();
+        // LoadDefaultReceipts.createReceipts();
 
         scheduleDailyReport();
 
@@ -36,12 +36,12 @@ public class AllmartUserInterface {
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = null;
         try {
-            date = dateFormatter.parse("2021-06-2 12:06");
+            date = dateFormatter.parse("2021-06-22 13:30");
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Timer timer = new Timer(true);
-        timer.schedule(scheduler, date, 86_400_000);
+        timer.schedule(scheduler, date, 50_000);
     }
 
     private static void openCashRegister(){

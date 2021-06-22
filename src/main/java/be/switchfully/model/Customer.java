@@ -23,6 +23,10 @@ public class Customer {
         this.scoreMonth+=scoreMonth;
     }
 
+    public void resetDailyScore(){
+        this.scoreDay = 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
