@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface CustomerDao<T> {
 
-    Optional<T> findByName(String name);
+    Optional<T> findByName(String firstName, String lastName);
 
     Optional<T> findById(String id);
 

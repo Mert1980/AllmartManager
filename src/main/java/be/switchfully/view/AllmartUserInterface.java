@@ -24,9 +24,9 @@ public class AllmartUserInterface {
     public static void run(){
         LoadDefaultReceipts.createReceipts();
 
-        openCashRegister();
-
         scheduleDailyReport();
+
+        openCashRegister();
 
         askForMonthlyReport();
     }
@@ -36,11 +36,11 @@ public class AllmartUserInterface {
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = null;
         try {
-            date = dateFormatter.parse("2021-06-24 19:30");
+            date = dateFormatter.parse("2021-06-2 12:06");
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Timer timer = new Timer(false);
+        Timer timer = new Timer(true);
         timer.schedule(scheduler, date, 86_400_000);
     }
 
@@ -58,8 +58,8 @@ public class AllmartUserInterface {
 
             Customer customer;
 
-            if(customerService.findByCustomerName(firstName + lastName) != null){
-                customer = customerService.findByCustomerName(firstName + lastName);
+            if(customerService.findByCustomerName(firstName,lastName) != null){
+                customer = customerService.findByCustomerName(firstName,lastName);
             } else {
                 customer = new Customer(firstName, lastName);
             }

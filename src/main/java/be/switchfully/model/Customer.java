@@ -28,12 +28,12 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return id.equals(customer.id);
+        return firstName.equalsIgnoreCase(customer.firstName) && lastName.equalsIgnoreCase(customer.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(firstName, lastName);
     }
 
     @Override

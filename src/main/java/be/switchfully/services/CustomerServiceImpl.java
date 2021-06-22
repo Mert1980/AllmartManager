@@ -7,9 +7,9 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerDao customerDao = AllmartServiceFactory.getCustomerDao();
 
     @Override
-    public Customer findByCustomerName(String name) {
-        if(customerDao.findByName(name).isPresent()){
-            return (Customer) customerDao.findByName(name).get();
+    public Customer findByCustomerName(String firstName, String lastName) {
+        if(customerDao.findByName(firstName, lastName).isPresent()){
+            return (Customer) customerDao.findByName(firstName, lastName).get();
         }
         return null;
     }

@@ -18,9 +18,10 @@ public class CustomerDaoImpl implements CustomerDao<Customer> {
     }
 
     @Override
-    public Optional<Customer> findByName(String name) {
+    public Optional<Customer> findByName(String firstName, String lastName) {
         return getCustomers().stream()
-                .filter(customer -> customer.toString().equalsIgnoreCase(name))
+                .filter(customer -> customer.getFirstName().equalsIgnoreCase(firstName)
+                        && customer.getLastName().equalsIgnoreCase(lastName))
                 .findFirst();
     }
 
