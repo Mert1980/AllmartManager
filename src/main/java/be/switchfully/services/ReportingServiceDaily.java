@@ -34,15 +34,15 @@ public class ReportingServiceDaily implements ReportingService{
         receiptsOfDay.stream()
                 .map(receipt -> receipt.getCustomer())
                 .distinct()
-                .filter(customer -> customer != null && !customer.getFullName().isEmpty())
+                .filter(customer -> customer != null && !customer.toString().isEmpty())
                 .sorted(Comparator.comparingInt(Customer::getScoreDay).reversed())
-                .forEach(customer -> System.out.println(String.format("%-20s %-20s", customer.getFullName(), customer.getScoreDay())));
+                .forEach(customer -> System.out.println(String.format("%-20s %-20s", customer.toString(), customer.getScoreDay())));
     }
 
     private void calculateDailyScore(Receipt receipt) {
         receipt.getCustomer().setScoreDay(-receipt.getCustomer().getScoreDay());
         int score = calculateScore(receipt);
-        if (receipt.getCustomer() != null && !receipt.getCustomer().getFullName().isEmpty()) {
+        if (receipt.getCustomer() != null && !receipt.getCustomer().toString().isEmpty()) {
             receipt.getCustomer().setScoreDay(score);
         }
     }
