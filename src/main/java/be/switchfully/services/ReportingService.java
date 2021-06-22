@@ -11,6 +11,10 @@ public interface ReportingService {
     default int calculateScore(Receipt receipt){
         int score = 0;
 
+        if (receipt.getCustomer().toString().trim().isEmpty()) {
+            return 0;
+        }
+
         if(receipt.getCustomer().toString().equalsIgnoreCase("Jane Janukova")){
             score+=10;
         }

@@ -34,14 +34,14 @@ public class ReportingServiceMonthly implements ReportingService {
         receiptsOfDay.stream()
                 .map(receipt -> receipt.getCustomer())
                 .distinct()
-                .filter(customer -> customer != null && !customer.toString().isEmpty())
+                .filter(customer -> customer != null && !customer.toString().trim().isEmpty())
                 .sorted(Comparator.comparingInt(Customer::getScoreMonth).reversed())
                 .forEach(customer -> System.out.println(String.format("%-20s %-20s", customer.toString(), customer.getScoreMonth())));
     }
 
     private void calculateMonthlyScore(Receipt receipt) {
         int score = calculateScore(receipt);
-        if (receipt.getCustomer() != null && !receipt.getCustomer().toString().isEmpty()) {
+        if (receipt.getCustomer() != null && !receipt.getCustomer().toString().trim().isEmpty()) {
             receipt.getCustomer().setScoreMonth(score);
         }
     }
