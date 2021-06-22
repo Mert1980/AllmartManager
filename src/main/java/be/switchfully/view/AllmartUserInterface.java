@@ -41,8 +41,8 @@ public class AllmartUserInterface {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Timer timer = new Timer(true);
-        timer.schedule(scheduler, date, 86_400_000);
+        Timer timer = new Timer(false);
+        timer.schedule(scheduler, date, 40_000);
     }
 
     private static void openCashRegister(){
