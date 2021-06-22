@@ -36,12 +36,12 @@ public class AllmartUserInterface {
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = null;
         try {
-            date = dateFormatter.parse("2021-06-22 13:30");
+            date = dateFormatter.parse("2021-06-24 19:30");
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Timer timer = new Timer(true);
-        timer.schedule(scheduler, date, 50_000);
+        timer.schedule(scheduler, date, 86_400_000);
     }
 
     private static void openCashRegister(){
