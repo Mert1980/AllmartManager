@@ -40,9 +40,10 @@ public class ReportingServiceMonthly implements ReportingService {
     }
 
     private void calculateMonthlyScore(Receipt receipt) {
+        receipt.getCustomer().resetMonthlyScore();
         int score = calculateScore(receipt);
         if (receipt.getCustomer() != null && !receipt.getCustomer().toString().trim().isEmpty()) {
-            receipt.getCustomer().setScoreMonth(score);
+            receipt.getCustomer().addScoreMonth(score);
         }
     }
 }

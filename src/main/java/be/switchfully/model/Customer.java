@@ -15,16 +15,20 @@ public class Customer {
     private int scoreDay;
     private int scoreMonth;
 
-    public void setScoreDay(int scoreDay) {
+    public void addScoreDay(int scoreDay) {
         this.scoreDay+=scoreDay;
     }
 
-    public void setScoreMonth(int scoreMonth) {
+    public void addScoreMonth(int scoreMonth) {
         this.scoreMonth+=scoreMonth;
     }
 
     public void resetDailyScore(){
         this.scoreDay = 0;
+    }
+
+    public void resetMonthlyScore() {
+        this.scoreMonth = 0;
     }
 
     @Override
