@@ -10,10 +10,10 @@ public class LoadDefaultReceipts {
     private static CashierService cashierService = AllmartServiceFactory.getCashierService();
 
     public static void createReceipts(){
-        Customer customer1 = new Customer("Mert");
-        Customer customer2 = new Customer("Asena");
-        Customer customer3 = new Customer("Kaan");
-        Customer customer4 = new Customer("Almira");
+        Customer customer1 = new Customer("Mert", "Demirok");
+        Customer customer2 = new Customer("Asena", "Demirok");
+        Customer customer3 = new Customer("Kaan", "Demirok");
+        Customer customer4 = new Customer("Almira", "Demirok");
 
         Product product1 = new Product("Book");
         Product product2 = new Product("Iphone");

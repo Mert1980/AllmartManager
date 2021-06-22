@@ -8,7 +8,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Customer {
     private String id = UUID.randomUUID().toString();
+    @NonNull
     private String firstName;
+    @NonNull
     private String lastName;
     private int scoreDay;
     private int scoreMonth;
