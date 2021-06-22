@@ -1,10 +1,7 @@
 package be.switchfully.services;
 
 import be.switchfully.model.Receipt;
-
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public interface ReportingService {
@@ -13,11 +10,8 @@ public interface ReportingService {
 
     default int calculateScore(Receipt receipt){
         int score = 0;
-        /*if(Objects.isNull(receipt.getCustomer()) || receipt.getCustomer().getFullName().isEmpty()){
-            return 0;
-        }*/
 
-        if(receipt.getCustomer().getFullName().equalsIgnoreCase("Jane Janukova")){
+        if(receipt.getCustomer().toString().equalsIgnoreCase("Jane Janukova")){
             score+=10;
         }
 
