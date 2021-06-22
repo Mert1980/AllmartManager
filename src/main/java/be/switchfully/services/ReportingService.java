@@ -1,11 +1,14 @@
 package be.switchfully.services;
 
+import be.switchfully.model.Product;
 import be.switchfully.model.Receipt;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public interface ReportingService {
     void generateReport();
+
     void generateReport(LocalDate date);
 
     default int calculateScore(Receipt receipt){
@@ -15,35 +18,51 @@ public interface ReportingService {
             return 0;
         }
 
-        if(receipt.getCustomer().toString().equalsIgnoreCase("Jane Janukova")){
-            score+=10;
+        score+=scoreSpecialCustomer(receipt);
+
+        score+=scoreSpecialProduct(receipt);
+
+        int totalAmount = totalAmountOfProduct(receipt);
+
+        score+=totalAmount;
+
+        score+=scoreTotalAmountOfProduct(totalAmount);
+
+        return score;
+    }
+
+    private int scoreTotalAmountOfProduct(int totalAmount) {
+        if(totalAmount > 30) {
+            return 9;
+        } else if(totalAmount > 20) {
+            return 7;
+        } else if(totalAmount > 10) {
+            return 5;
         }
+        return 0;
+    }
 
-        AtomicInteger scoreForSmartPhone = new AtomicInteger();
-        receipt.getProductAmountMap().entrySet()
-                .stream().forEach(productIntegerEntry -> {
-            if(productIntegerEntry.getKey().getProductName().equalsIgnoreCase("SmartPhone X")){
-                scoreForSmartPhone.set(productIntegerEntry.getValue() * 5);
-            } else scoreForSmartPhone.set(0);
-        });
-
-        score+=scoreForSmartPhone.get();
-
-        int amount = receipt.getProductAmountMap()
+    private int totalAmountOfProduct(Receipt receipt){
+        return receipt.getProductAmountMap()
                 .values()
                 .stream()
                 .mapToInt(Integer::intValue)
                 .sum();
+    };
 
-        score+=amount;
-
-        if(amount > 30) {
-            score+=9;
-        } else if(amount > 20) {
-            score+=7;
-        } else if(amount > 10) {
-            score+=5;
+    private int scoreSpecialCustomer(Receipt receipt){
+        if(receipt.getCustomer().toString().equalsIgnoreCase("Jane Janukova")){
+            return 10;
         }
-        return score;
-    }
+        return 0;
+    };
+
+    private int scoreSpecialProduct(Receipt receipt){
+        for (Map.Entry<Product, Integer> productEntry : receipt.getProductAmountMap().entrySet()) {
+            if(productEntry.getKey().getProductName().equalsIgnoreCase("SmartPhone X")){
+                return productEntry.getValue()*5;
+            }
+        }
+        return 0;
+    };
 }
