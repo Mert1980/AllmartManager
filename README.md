@@ -1,7 +1,7 @@
 # AllmartManager
 ## Pseudocode
 ![](https://github.com/Mert1980/AllmartManager/blob/main/src/main/resources/AllmartPseudocode1.png?raw=true)
-
+<br/>
 ![](https://github.com/Mert1980/AllmartManager/blob/main/src/main/resources/AllmartPseudocode2.png?raw=true)
 
 ## Model
