@@ -103,4 +103,5 @@ public class AllmartUserInterface {
         }
         return isCashRegisterOpen;
     }
+
 }
